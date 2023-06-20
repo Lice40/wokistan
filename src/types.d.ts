@@ -9,6 +9,8 @@ declare global {
     interface ProcessEnv {
       CLIENT_ID: string;
       TOKEN: string;
+      CHANNEL_ID: string;
+      ROLE_ID: string;
     }
   }
 }
@@ -26,7 +28,7 @@ export interface BotEvent {
 
 export interface SlashCommand {
   name: string;
-  data: SlashCommandBuilder;
+  data: SlashCommandBuilder | any;
   execute: (interaction: CommandInteraction) => Promise<void>;
 }
 export {};

@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Collection } from "discord.js";
+import { Client, GatewayIntentBits, Collection, Partials } from "discord.js";
 import * as dotenv from "dotenv";
 import { readdirSync } from "fs";
 import { join } from "path";
@@ -13,7 +13,9 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
   ],
+  partials: [Partials.GuildMember],
 });
 client.slashCommands = new Collection<string, SlashCommand>();
 const handlersDirs = join(__dirname, "./handlers");
@@ -23,3 +25,5 @@ readdirSync(handlersDirs).forEach((file) => {
 });
 
 client.login(process.env.TOKEN);
+
+export { client };

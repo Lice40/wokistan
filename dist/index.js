@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.client = void 0;
 const discord_js_1 = require("discord.js");
 const dotenv = __importStar(require("dotenv"));
 const fs_1 = require("fs");
@@ -35,8 +36,11 @@ const client = new discord_js_1.Client({
         discord_js_1.GatewayIntentBits.GuildMessages,
         discord_js_1.GatewayIntentBits.GuildMessageReactions,
         discord_js_1.GatewayIntentBits.MessageContent,
+        discord_js_1.GatewayIntentBits.GuildMembers,
     ],
+    partials: [discord_js_1.Partials.GuildMember],
 });
+exports.client = client;
 client.slashCommands = new discord_js_1.Collection();
 const handlersDirs = (0, path_1.join)(__dirname, "./handlers");
 (0, fs_1.readdirSync)(handlersDirs).forEach((file) => {

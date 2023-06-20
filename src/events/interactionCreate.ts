@@ -12,7 +12,6 @@ const event: BotEvent = {
     );
 
     if (!command) return;
-
     await command.execute(interaction);
   },
 };
