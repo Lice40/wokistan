@@ -37,8 +37,10 @@ const client = new discord_js_1.Client({
         discord_js_1.GatewayIntentBits.GuildMessageReactions,
         discord_js_1.GatewayIntentBits.MessageContent,
         discord_js_1.GatewayIntentBits.GuildMembers,
+        discord_js_1.IntentsBitField.Flags.Guilds,
+        discord_js_1.IntentsBitField.Flags.GuildMembers,
     ],
-    partials: [discord_js_1.Partials.GuildMember],
+    partials: [discord_js_1.Partials.GuildMember, discord_js_1.Partials.User],
 });
 exports.client = client;
 client.slashCommands = new discord_js_1.Collection();

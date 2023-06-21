@@ -11,15 +11,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const event = {
-    name: discord_js_1.Events.ClientReady,
-    once: true,
-    execute(client) {
+    name: discord_js_1.Events.GuildMemberUpdate,
+    once: false,
+    execute(oldMember, newMember) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(`logged as ${client.user.tag}`);
-            yield client.guilds.cache.get(process.env.GUILD_ID).members.fetch(); //force le chargement des données des utilisateurs dans le cache !!!
-            // console.log(guildMembers);
-            var channelToWrite = client.channels.cache.get("764019300230758411");
-            // channelToWrite.send(`Hello World <@&${process.env.ROLE_ID}>!`);
+            console.log("membre modifié\n");
+            const oldRoles = Array.from(oldMember.roles.cache.values());
+            const newRoles = Array.from(newMember.roles.cache.values());
+            let addedRoles = newRoles.filter((elt) => {
+                return oldRoles.indexOf(elt) === -1;
+            });
+            console.log(addedRoles);
+            console.log(addedRoles);
+            if (addedRoles.find((r) => {
+                return r.id === "680442166434070542";
+            })) {
+                var tc = newMember.guild.channels.cache.get("764019300230758411");
+                tc.send(`${newMember.user} a reçu le role ${newMember.roles.cache.get("680442166434070542")}`);
+            }
         });
     },
 };

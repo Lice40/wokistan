@@ -9,18 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.command = void 0;
 const discord_js_1 = require("discord.js");
-const event = {
-    name: discord_js_1.Events.ClientReady,
-    once: true,
-    execute(client) {
-        return __awaiter(this, void 0, void 0, function* () {
-            console.log(`logged as ${client.user.tag}`);
-            yield client.guilds.cache.get(process.env.GUILD_ID).members.fetch(); //force le chargement des données des utilisateurs dans le cache !!!
-            // console.log(guildMembers);
-            var channelToWrite = client.channels.cache.get("764019300230758411");
-            // channelToWrite.send(`Hello World <@&${process.env.ROLE_ID}>!`);
+exports.command = {
+    name: "react",
+    data: new discord_js_1.SlashCommandBuilder()
+        .setName("react")
+        .setDescription("Sends a message with a reaction"),
+    execute: (interaction) => __awaiter(void 0, void 0, void 0, function* () {
+        const msg = yield interaction.reply({
+            content: "Message avec réaction",
+            fetchReply: true,
         });
-    },
+        yield msg.react("😄");
+    }),
 };
-exports.default = event;
