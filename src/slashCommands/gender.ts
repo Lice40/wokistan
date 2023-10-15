@@ -16,6 +16,7 @@ export const command: SlashCommand = {
   execute: async (interaction) => {
     const modal = new GenderPickerModal(interaction.user.id);
     await modal.show(interaction);
+
     interaction.awaitModalSubmit({ time: 30000 }).then((result) => {
       const limit = result.fields.getTextInputValue(
         "limit"
