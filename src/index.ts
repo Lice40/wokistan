@@ -33,4 +33,10 @@ readdirSync(handlersDirs).forEach((file) => {
 });
 client.login(process.env.TOKEN);
 
+if (!Array.prototype.sample) {
+  Array.prototype.sample = function () {
+    return this[Math.floor(Math.random() * this.length)];
+  };
+}
+
 export { client };
