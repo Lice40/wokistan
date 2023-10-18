@@ -1,41 +1,54 @@
 import {
-  ActionRowBuilder,
-  ModalBuilder,
+  ChatInputCommandInteraction,
+  CommandInteraction,
   SlashCommandBuilder,
-  TextInputBuilder,
-  TextInputStyle,
 } from "discord.js";
 import { SlashCommand } from "../types";
-import { EmbedBuilder } from "@discordjs/builders";
-import { GenderPickerModal } from "../modals/genderPickerModal";
+import { genderPick, genderInfo } from "./genderCommands/gender.module";
 export const command: SlashCommand = {
   name: "gender",
   data: new SlashCommandBuilder()
     .setName("gender")
-    .setDescription("selectionne un ou plusieurs pronoms et accords"),
-  execute: async (interaction) => {
-    const modal = new GenderPickerModal(interaction.user.id);
-    await modal.show(interaction);
+    .setDescription("selectionne un ou plusieurs pronoms et accords")
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("pick")
+        .setDescription(
+          "Sélectionne aléatoirement un pronom et un accord depuis une liste"
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("info")
+        .setDescription("retourne des informations sur une personne")
+        .addStringOption((opt) =>
+          opt
+            .setName("usr")
+            .setDescription("the user you want informations")
+            .setRequired(true)
+        )
+    ),
+  execute: async (interaction: CommandInteraction) => {
+    const cmd = (
+      interaction as ChatInputCommandInteraction
+    ).options.getSubcommand();
 
-    interaction.awaitModalSubmit({ time: 30000 }).then((result) => {
-      const limit = result.fields.getTextInputValue(
-        "limit"
-      ) as unknown as number;
-      const pronoms = result.fields.getTextInputValue("pronoms").split(",");
-      const accords = result.fields.getTextInputValue("accords").split(",");
-      let results: string = "résultats: \n";
-      for (let i = 0; i < limit; i++) {
-        let line = `- pronom: ${pronoms.sample()}, accords: ${accords.sample()} \n`;
-        results = results.concat(line);
-      }
-      result.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setTitle("Résultats")
-            .setDescription(results)
-            .setColor(15548997),
-        ],
-      });
-    });
+    // if (cmd == "pick") {
+    //   console.log("pick");
+    //   await genderPick(interaction);
+    // }
+
+    switch (cmd) {
+      case "pick":
+        await genderPick(interaction);
+        break;
+      case "info":
+        if (interaction.options.get("usr")) {
+          await genderInfo(
+            interaction,
+            interaction.options.get("usr").value.toString()
+          );
+        }
+    }
   },
 };

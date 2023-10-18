@@ -5,12 +5,6 @@ export class GenderPickerModal extends Modal {
   constructor(id: string) {
     super(id, "paramètres");
 
-    const limitInput = new TextInputBuilder()
-      .setCustomId("limit")
-      .setLabel("limite")
-      .setValue("1")
-      .setStyle(TextInputStyle.Short);
-
     const pronomsInput = new TextInputBuilder()
       .setCustomId("pronoms")
       .setLabel("liste de pronoms")
@@ -24,12 +18,10 @@ export class GenderPickerModal extends Modal {
       .setStyle(TextInputStyle.Paragraph);
 
     const firstActionRow =
-      new ActionRowBuilder<TextInputBuilder>().addComponents(limitInput);
-    const secondActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(pronomsInput);
-    const thirdActionRow =
+    const secondActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(accordsInput);
 
-    this.modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
+    this.modal.addComponents(firstActionRow, secondActionRow);
   }
 }

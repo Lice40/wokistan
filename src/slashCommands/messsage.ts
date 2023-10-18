@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../types";
 import { EmbedBuilder } from "@discordjs/builders";
 export const command: SlashCommand = {
@@ -12,7 +12,7 @@ export const command: SlashCommand = {
         .setDescription("message à afficher")
         .setRequired(true);
     }),
-  execute: async (interaction) => {
+  execute: async (interaction: CommandInteraction) => {
     const message = interaction.options.get("message").value.toString();
     await interaction.reply({ content: `valeur du message: ${message}` });
   },

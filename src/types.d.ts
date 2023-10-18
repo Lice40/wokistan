@@ -2,6 +2,8 @@ import {
   SlashCommandBuilder,
   CommandInteraction,
   Collection,
+  ApplicationCommand,
+  ChatInputCommandInteraction,
 } from "discord.js";
 
 declare module "discord.js" {

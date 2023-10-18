@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../types";
 import { EmbedBuilder } from "@discordjs/builders";
 export const command: SlashCommand = {
@@ -6,7 +6,7 @@ export const command: SlashCommand = {
   data: new SlashCommandBuilder()
     .setName("ping")
     .setDescription("Affiche le ping du bot"),
-  execute: async (interaction) => {
+  execute: async (interaction: CommandInteraction) => {
     await interaction.reply({
       embeds: [
         new EmbedBuilder()
