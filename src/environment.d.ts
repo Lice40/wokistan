@@ -6,6 +6,7 @@ declare global {
       CHANNEL_ID: string;
       ROLE_ID: string;
       GUILD_ID: string;
+      MONGODB_STR: string;
     }
   }
 }
