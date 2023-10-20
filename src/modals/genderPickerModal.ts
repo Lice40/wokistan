@@ -1,8 +1,9 @@
+import pronounInfo from "../schemas/pronounInfo";
 import { Modal } from "./modals";
 import { ActionRowBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 
 export class GenderPickerModal extends Modal {
-  constructor(id: string) {
+  constructor(id: string, datas: any | null) {
     super(id, "paramètres");
 
     const pronomsInput = new TextInputBuilder()
@@ -17,6 +18,10 @@ export class GenderPickerModal extends Modal {
       .setValue("masc,fem,neutre,épicène")
       .setStyle(TextInputStyle.Paragraph);
 
+    if (datas) {
+      pronomsInput.setValue((datas.pronouns as Array<string>).join(","));
+      accordsInput.setValue((datas.accords as Array<string>).join(","));
+    }
     const firstActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(pronomsInput);
     const secondActionRow =
