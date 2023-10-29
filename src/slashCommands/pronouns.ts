@@ -1,6 +1,8 @@
 import {
   ChatInputCommandInteraction,
+  Colors,
   CommandInteraction,
+  EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
@@ -37,6 +39,15 @@ export const command: SlashCommand = {
             interaction,
             interaction.options.get("user").user
           );
+        } else {
+          await interaction.reply({
+            embeds: [
+              new EmbedBuilder()
+                .setTitle("Erreur")
+                .setDescription(`utilisateurice introuvable`)
+                .setColor(Colors.Red),
+            ],
+          });
         }
         break;
       case "add":

@@ -1,4 +1,11 @@
-import { CommandInteraction, EmbedBuilder, User } from "discord.js";
+import {
+  Colors,
+  CommandInteraction,
+  EmbedBuilder,
+  Guild,
+  GuildMember,
+  User,
+} from "discord.js";
 import Pronouns from "../../schemas/pronounInfo";
 import dailyPronouns from "../../schemas/dailyPronouns";
 
@@ -6,12 +13,22 @@ export async function pronounInformations(
   interaction: CommandInteraction,
   user: User
 ) {
-  console.log("je suis dans la fonction");
-
+  let member: GuildMember = await interaction.client.guilds.cache
+    .get(interaction.guildId)
+    .members.fetch({ user: user.id });
   let infos = await Pronouns.findOne({ userId: user.id });
   let daily = await dailyPronouns.findOne({ userId: user.id });
   if (!infos) {
-    await interaction.reply(`aucune info sur l'utilisateurice ${user}`);
+    await interaction.reply({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle("Aucune informations")
+          .setDescription(
+            `L'utilisateurice ${member.nickname} ne semble pas avoir enregistré d'informations pour l'instant`
+          )
+          .setColor(Colors.Red),
+      ],
+    });
   } else {
     let result = `**informations générales:** \n > pronoms: ${(
       infos.pronouns as Array<string>
@@ -27,9 +44,9 @@ export async function pronounInformations(
     await interaction.reply({
       embeds: [
         new EmbedBuilder()
-          .setTitle(`informations de l'utilisateurice ${user.username}`)
+          .setTitle(`informations de l'utilisateurice ${member.nickname}`)
           .setDescription(result)
-          .setColor(15548997),
+          .setColor(Colors.Green),
       ],
     });
   }

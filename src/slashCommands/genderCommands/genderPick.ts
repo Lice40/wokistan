@@ -1,4 +1,9 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import {
+  Colors,
+  CommandInteraction,
+  EmbedBuilder,
+  GuildMember,
+} from "discord.js";
 import { GenderPickerModal } from "../../modals/genderPickerModal";
 import dailyPronouns from "../../schemas/dailyPronouns";
 import pronounInfo from "../../schemas/pronounInfo";
@@ -7,6 +12,8 @@ export async function genderPick(interaction: CommandInteraction) {
   const datas = await pronounInfo.findOne({ userId: interaction.user.id });
   const modal = new GenderPickerModal(interaction.user.id, datas);
   let data = await dailyPronouns.findOne({ userId: interaction.user.id });
+  let member: GuildMember = interaction.member as GuildMember;
+  // member.setNickname("test");
   await interaction.showModal(modal.getModal);
   interaction
     .awaitModalSubmit({ time: 30000 })
@@ -35,7 +42,7 @@ export async function genderPick(interaction: CommandInteraction) {
           new EmbedBuilder()
             .setTitle("Résultats")
             .setDescription(results)
-            .setColor(15548997),
+            .setColor(Colors.Green),
         ],
       });
     })

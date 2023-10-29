@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
+import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
 import recommendations from "../../schemas/recommendations";
 
 export async function deleteReco(
@@ -8,7 +8,14 @@ export async function deleteReco(
   let value = await recommendations.findOne({ name: name });
 
   if (!value) {
-    await interaction.reply(`la recommendation ${name} n'existe pas`);
+    await interaction.reply({
+      embeds: [
+        new EmbedBuilder()
+          .setTitle("Erreur")
+          .setDescription(`La recomendation ${name} n'existe pas`)
+          .setColor(Colors.Red),
+      ],
+    });
   } else {
     await recommendations.findOneAndDelete({ name: name });
     await interaction.reply({
@@ -18,7 +25,7 @@ export async function deleteReco(
           .setDescription(
             `**element**: \n > Nom: ${value.name}\n > Type: ${value.type} \n`
           )
-          .setColor(2067276),
+          .setColor(Colors.Green),
       ],
     });
   }

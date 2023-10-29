@@ -4,6 +4,7 @@ import {
   Collection,
   Partials,
   IntentsBitField,
+  PermissionFlagsBits,
 } from "discord.js";
 import * as dotenv from "dotenv";
 import { readdirSync } from "fs";

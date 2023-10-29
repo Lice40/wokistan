@@ -1,32 +1,48 @@
-import { CommandInteraction, EmbedBuilder } from "discord.js";
-import recommendations from "../../schemas/recommendations";
+import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
+import recommendations, { Recommendation } from "../../schemas/recommendations";
+import { AddRecoModal } from "../../modals/addRecoModal";
 
-export async function addReco(
-  interaction: CommandInteraction,
-  name: string,
-  type: string
-) {
-  let data = await recommendations.findOne({ name: name, type: type });
+export async function addReco(interaction: CommandInteraction) {
+  const modal = new AddRecoModal(interaction.user.id);
+  await interaction.showModal(modal.getModal);
 
-  if (data) {
-    await interaction.reply(
-      "cette recommendation est déjà présente dans la liste"
-    );
-  }
+  interaction
+    .awaitModalSubmit({ time: 50000 })
+    .then(async (result) => {
+      let name = result.fields.getTextInputValue("name");
+      let type = result.fields.getTextInputValue("type");
+      let warnings = result.fields.getTextInputValue("warnings").split(",");
+      let data: Recommendation = await recommendations.findOne({
+        name: name,
+        type: type,
+      });
 
-  await recommendations.create({
-    added_by: interaction.user.username,
-    name: name,
-    type: type,
-    user: interaction.user.id,
-  });
-
-  await interaction.reply({
-    embeds: [
-      new EmbedBuilder()
-        .setTitle("Ajouté")
-        .setDescription(`**informations**:\n > Nom: ${name}\n > Type: ${type}`)
-        .setColor(2067276),
-    ],
-  });
+      if (data) {
+        await interaction.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setTitle("L'oeuvre existe déjà")
+              .setDescription(`L'oeuvre ${data.name} est déjà enregistrée`)
+              .setColor(Colors.Red),
+          ],
+        });
+      } else {
+        await result.reply({
+          embeds: [
+            new EmbedBuilder()
+              .setTitle("Modification réussie")
+              .setDescription(`L'oeuvre ${name} à été créée`)
+              .setColor(Colors.Green),
+          ],
+        });
+        await recommendations.create({
+          added_by: interaction.user.username,
+          user: interaction.user.id,
+          type: type.replace(/^./, type[0].toUpperCase()),
+          name: name.replace(/^./, name[0].toUpperCase()),
+          warnings: warnings.length == 0 || warnings[0] == "" ? [] : warnings,
+        });
+      }
+    })
+    .catch((err) => console.log(err));
 }
