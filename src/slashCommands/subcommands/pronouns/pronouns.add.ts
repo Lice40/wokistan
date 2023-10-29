@@ -1,8 +1,8 @@
 import { CommandInteraction, User } from "discord.js";
 
-import { Modal } from "../../modals/modals";
-import { PronounEditModal } from "../../modals/pronounEditModal";
-import Pronouns from "../../schemas/pronounInfo";
+import { Modal } from "../../../modals/modals";
+import { PronounEditModal } from "../../../modals/pronounEditModal";
+import Pronouns from "../../../schemas/pronounInfo";
 
 export async function pronounAdd(user: User, interaction: CommandInteraction) {
   let informations = await Pronouns.findOne({

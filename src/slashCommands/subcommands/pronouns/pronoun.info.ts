@@ -6,8 +6,8 @@ import {
   GuildMember,
   User,
 } from "discord.js";
-import Pronouns from "../../schemas/pronounInfo";
-import dailyPronouns from "../../schemas/dailyPronouns";
+import Pronouns from "../../../schemas/pronounInfo";
+import dailyPronouns from "../../../schemas/dailyPronouns";
 
 export async function pronounInformations(
   interaction: CommandInteraction,

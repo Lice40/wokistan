@@ -6,8 +6,8 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
-import { pronounInformations } from "./pronounCommands/pronounInfo";
-import { pronounAdd } from "./pronounCommands/pronounAdd";
+import { pronounInformations } from "./subcommands/pronouns/pronoun.info";
+import { pronounAdd } from "./subcommands/pronouns/pronouns.add";
 export const command: SlashCommand = {
   name: "pronouns",
   data: new SlashCommandBuilder()

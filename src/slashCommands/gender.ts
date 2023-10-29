@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
-import { genderPick } from "./genderCommands/gender.module";
+import { genderPick } from "./subcommands/gender/gender.module";
 export const command: SlashCommand = {
   name: "gender",
   data: new SlashCommandBuilder()

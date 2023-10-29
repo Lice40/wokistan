@@ -1,5 +1,11 @@
 import mongoose, { InferSchemaType, Schema, model } from "mongoose";
 
+export interface Daily {
+  userId: string;
+  pronom: string;
+  accord: string;
+}
+
 let dailyPronounSchema = new Schema({
   userId: { type: String, required: true },
   pronom: String,

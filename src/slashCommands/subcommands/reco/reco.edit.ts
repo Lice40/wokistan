@@ -1,6 +1,8 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
-import { RecoEditModal } from "../../modals/recoEditModal";
-import recommendations, { Recommendation } from "../../schemas/recommendations";
+import { RecoEditModal } from "../../../modals/recoEditModal";
+import recommendations, {
+  Recommendation,
+} from "../../../schemas/recommendations";
 
 export async function editRecommendation(
   interaction: CommandInteraction,

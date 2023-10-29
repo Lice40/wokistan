@@ -4,40 +4,21 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
-import { pronounInformations } from "./pronounCommands/pronounInfo";
-import { pronounAdd } from "./pronounCommands/pronounAdd";
-import { addReco } from "./recoCommands/addReco";
-import { listRecommendations } from "./recoCommands/listReco";
-import { deleteReco } from "./recoCommands/deleteReco";
-import { editRecommendation } from "./recoCommands/editReco";
+import { pronounInformations } from "./subcommands/pronouns/pronoun.info";
+import { pronounAdd } from "./subcommands/pronouns/pronouns.add";
+import { addReco } from "./subcommands/reco/reco.add";
+import { listRecommendations } from "./subcommands/reco/reco.list";
+import { deleteReco } from "./subcommands/reco/reco.delete";
+import { editRecommendation } from "./subcommands/reco/reco.edit";
 export const command: SlashCommand = {
   name: "reco",
   data: new SlashCommandBuilder()
     .setName("reco")
     .setDescription("permet de gérer les recommendations")
-    .addSubcommand(
-      (subcommand) =>
-        subcommand
-          .setName("add")
-          .setDescription("ajoute une recommendation dans la liste")
-      // .addStringOption((opt) =>
-      //   opt
-      //     .setName("name")
-      //     .setDescription("Le nom de la recommendation")
-      //     .setRequired(true)
-      // )
-      // .addStringOption((opt) =>
-      //   opt
-      //     .setName("type")
-      //     .setDescription("le type de recommendation")
-      //     .setRequired(true)
-      // )
-      // .addStringOption((opt) =>
-      //   opt
-      //     .setName("warnings")
-      //     .setDescription("les trigger warnings éventuels")
-      //     .setRequired(false)
-      // )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("add")
+        .setDescription("ajoute une recommendation dans la liste")
     )
     .addSubcommand((subcommand) =>
       subcommand
@@ -79,15 +60,6 @@ export const command: SlashCommand = {
 
     switch (cmd) {
       case "add":
-        // let name = interaction.options
-        //   .get("name")
-        //   .value.toString()
-        //   .toLowerCase();
-        // let type = interaction.options
-        //   .get("type")
-        //   .value.toString()
-        //   .toLowerCase();
-        // let warnings = interaction.options.get("warnings").value.toString();
         await addReco(interaction);
         break;
       case "list":
@@ -100,7 +72,10 @@ export const command: SlashCommand = {
         await deleteReco(interaction, nom.replace(/^./, nom[0].toUpperCase()));
         break;
       case "edit":
-        let rName = interaction.options.get("nomreco").value.toString();
+        let rName = interaction.options
+          .get("nomreco")
+          .value.toString()
+          .toLowerCase();
         await editRecommendation(
           interaction,
           rName.replace(/^./, rName[0].toUpperCase())

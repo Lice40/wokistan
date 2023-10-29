@@ -1,5 +1,12 @@
 import mongoose, { InferSchemaType, Schema, model } from "mongoose";
 
+export interface PronounInfo {
+  userId: string;
+  pronouns: Array<string>;
+  accords: Array<string>;
+  page: string;
+}
+
 let pronounSchema = new Schema({
   userId: { type: String, required: true },
   pronouns: Array<String>,

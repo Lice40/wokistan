@@ -1,6 +1,8 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
-import recommendations, { Recommendation } from "../../schemas/recommendations";
-import { AddRecoModal } from "../../modals/addRecoModal";
+import recommendations, {
+  Recommendation,
+} from "../../../schemas/recommendations";
+import { AddRecoModal } from "../../../modals/addRecoModal";
 
 export async function addReco(interaction: CommandInteraction) {
   const modal = new AddRecoModal(interaction.user.id);
@@ -9,8 +11,14 @@ export async function addReco(interaction: CommandInteraction) {
   interaction
     .awaitModalSubmit({ time: 50000 })
     .then(async (result) => {
-      let name = result.fields.getTextInputValue("name");
-      let type = result.fields.getTextInputValue("type");
+      let name = result.fields
+        .getTextInputValue("name")
+        .toString()
+        .toLowerCase();
+      let type = result.fields
+        .getTextInputValue("type")
+        .toString()
+        .toLowerCase();
       let warnings = result.fields.getTextInputValue("warnings").split(",");
       let data: Recommendation = await recommendations.findOne({
         name: name,

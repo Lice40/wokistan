@@ -1,5 +1,5 @@
 import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
-import recommendations from "../../schemas/recommendations";
+import recommendations from "../../../schemas/recommendations";
 
 export async function deleteReco(
   interaction: CommandInteraction,

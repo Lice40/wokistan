@@ -4,9 +4,9 @@ import {
   EmbedBuilder,
   GuildMember,
 } from "discord.js";
-import { GenderPickerModal } from "../../modals/genderPickerModal";
-import dailyPronouns from "../../schemas/dailyPronouns";
-import pronounInfo from "../../schemas/pronounInfo";
+import { GenderPickerModal } from "../../../modals/genderPickerModal";
+import dailyPronouns from "../../../schemas/dailyPronouns";
+import pronounInfo from "../../../schemas/pronounInfo";
 
 export async function genderPick(interaction: CommandInteraction) {
   const datas = await pronounInfo.findOne({ userId: interaction.user.id });

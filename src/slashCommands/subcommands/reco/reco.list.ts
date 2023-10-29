@@ -5,7 +5,9 @@ import {
   GuildMember,
   User,
 } from "discord.js";
-import recommendations, { Recommendation } from "../../schemas/recommendations";
+import recommendations, {
+  Recommendation,
+} from "../../../schemas/recommendations";
 
 export async function listRecommendations(
   interaction: CommandInteraction,
