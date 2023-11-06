@@ -4,7 +4,7 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
-import { pronounInformations } from "./subcommands/pronouns/pronoun.info";
+import { pronounInformations } from "./subcommands/pronouns/pronouns.info";
 import { pronounAdd } from "./subcommands/pronouns/pronouns.add";
 import { addReco } from "./subcommands/reco/reco.add";
 import { listRecommendations } from "./subcommands/reco/reco.list";
@@ -28,6 +28,12 @@ export const command: SlashCommand = {
           opt
             .setName("user")
             .setDescription("l'utilisateurice dont on veut les recommendations")
+            .setRequired(false)
+        )
+        .addStringOption((opt) =>
+          opt
+            .setName("exclude")
+            .setDescription("trigger warning to exclude")
             .setRequired(false)
         )
     )
@@ -65,7 +71,9 @@ export const command: SlashCommand = {
       case "list":
         let opt = interaction.options.get("user");
         let user = opt ? opt.user : null;
-        await listRecommendations(interaction, user);
+        let opt2 = interaction.options.get("exclude");
+        let exclude = opt2 ? opt2.value.toString() : null;
+        await listRecommendations(interaction, user, exclude);
         break;
       case "delete":
         let nom = interaction.options.get("nom").value.toString().toLowerCase();

@@ -6,7 +6,7 @@ const event: BotEvent = {
   name: Events.GuildMemberUpdate,
   once: false,
   async execute(oldMember: GuildMember, newMember: GuildMember) {
-    console.log("membre modifié\n");
+    // console.log("membre modifié\n");
     const oldRoles = Array.from(oldMember.roles.cache.values());
     const newRoles = Array.from(newMember.roles.cache.values());
 
@@ -14,8 +14,8 @@ const event: BotEvent = {
       return oldRoles.indexOf(elt) === -1;
     });
 
-    console.log(addedRoles);
-    console.log(addedRoles);
+    // console.log(addedRoles);
+    // console.log(addedRoles);
     if (
       addedRoles.find((r: Role) => {
         return r.id === "680442166434070542";

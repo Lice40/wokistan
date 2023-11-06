@@ -29,7 +29,12 @@ export async function editRecommendation(
     .awaitModalSubmit({ time: 50000 })
     .then(async (result) => {
       let warnings = result.fields.getTextInputValue("warnings").split(",");
-
+      for (let i = 0; i < warnings.length; i++) {
+        if (warnings[i].startsWith(" ")) {
+          warnings[i] = warnings[i].substring(1, warnings[i].length);
+        }
+        warnings[i] = warnings[i].toLowerCase();
+      }
       await result.reply({
         embeds: [
           new EmbedBuilder()

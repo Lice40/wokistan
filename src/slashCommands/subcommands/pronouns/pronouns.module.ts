@@ -1,4 +1,4 @@
-import { pronounInformations } from "./pronoun.info";
+import { pronounInformations } from "./pronouns.info";
 import { pronounAdd } from "./pronouns.add";
 
 export { pronounInformations, pronounAdd };

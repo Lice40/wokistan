@@ -9,7 +9,7 @@ export async function addReco(interaction: CommandInteraction) {
   await interaction.showModal(modal.getModal);
 
   interaction
-    .awaitModalSubmit({ time: 50000 })
+    .awaitModalSubmit({ time: 120000 })
     .then(async (result) => {
       let name = result.fields
         .getTextInputValue("name")
@@ -19,7 +19,9 @@ export async function addReco(interaction: CommandInteraction) {
         .getTextInputValue("type")
         .toString()
         .toLowerCase();
-      let warnings = result.fields.getTextInputValue("warnings").split(",");
+      let warnings: string[] = result.fields
+        .getTextInputValue("warnings")
+        .split(",");
       let data: Recommendation = await recommendations.findOne({
         name: name,
         type: type,
@@ -43,6 +45,14 @@ export async function addReco(interaction: CommandInteraction) {
               .setColor(Colors.Green),
           ],
         });
+        for (let i = 0; i < warnings.length; i++) {
+          if (warnings[i].startsWith(" ")) {
+            warnings[i] = warnings[i]
+              .substring(1, warnings[i].length)
+              .toLowerCase();
+          }
+          warnings[i] = warnings[i].toLowerCase();
+        }
         await recommendations.create({
           added_by: interaction.user.username,
           user: interaction.user.id,

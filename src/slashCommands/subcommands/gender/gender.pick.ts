@@ -16,7 +16,7 @@ export async function genderPick(interaction: CommandInteraction) {
   // member.setNickname("test");
   await interaction.showModal(modal.getModal);
   interaction
-    .awaitModalSubmit({ time: 30000 })
+    .awaitModalSubmit({ time: 120000 })
     .then(async (result) => {
       const pronoms = result.fields.getTextInputValue("pronoms").split(",");
       const accords = result.fields.getTextInputValue("accords").split(",");
@@ -46,5 +46,5 @@ export async function genderPick(interaction: CommandInteraction) {
         ],
       });
     })
-    .catch((err) => console.log("cancelled"));
+    .catch((err) => console.log(err));
 }

@@ -1,4 +1,10 @@
-import { CommandInteraction, User } from "discord.js";
+import {
+  Colors,
+  CommandInteraction,
+  EmbedBuilder,
+  GuildMember,
+  User,
+} from "discord.js";
 
 import { Modal } from "../../../modals/modals";
 import { PronounEditModal } from "../../../modals/pronounEditModal";
@@ -8,6 +14,9 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
   let informations = await Pronouns.findOne({
     userId: user.id,
   });
+  let member: GuildMember = await interaction.client.guilds.cache
+    .get(interaction.guildId)
+    .members.fetch({ user: interaction.user.id });
   let modal: Modal = new PronounEditModal(user.id, informations);
   await interaction.showModal(modal.getModal);
 
@@ -30,7 +39,16 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
           page: page,
         });
       }
-      await result.reply(`données de l'uilisateurice ${user} mises à jour`);
+      await result.reply({
+        embeds: [
+          new EmbedBuilder()
+            .setTitle("mise à jour réussie")
+            .setDescription(
+              `informations de l'utilisateurice ${member.nickname} mises à jour`
+            )
+            .setColor(Colors.Green),
+        ],
+      });
     })
     .catch((err) => console.log("cancelled"));
 }
