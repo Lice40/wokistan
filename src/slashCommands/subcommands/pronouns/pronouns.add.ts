@@ -21,7 +21,7 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
   await interaction.showModal(modal.getModal);
 
   interaction
-    .awaitModalSubmit({ time: 60000 })
+    .awaitModalSubmit({ time: 360000 })
     .then(async (result) => {
       const pronoms = result.fields.getTextInputValue("pronouns").split(",");
       const accords = result.fields.getTextInputValue("gendering").split(",");
@@ -44,11 +44,13 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
           new EmbedBuilder()
             .setTitle("mise à jour réussie")
             .setDescription(
-              `informations de l'utilisateurice ${member.nickname} mises à jour`
+              `informations de l'utilisateurice ${
+                member.nickname ? member.nickname : member.user.username
+              } mises à jour`
             )
             .setColor(Colors.Green),
         ],
       });
     })
-    .catch((err) => console.log("cancelled"));
+    .catch((err) => console.log(err));
 }

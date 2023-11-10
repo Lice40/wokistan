@@ -44,7 +44,11 @@ export async function pronounInformations(
     await interaction.reply({
       embeds: [
         new EmbedBuilder()
-          .setTitle(`informations de l'utilisateurice ${member.nickname}`)
+          .setTitle(
+            `informations de l'utilisateurice ${
+              member.nickname ? member.nickname : member.user.username
+            }`
+          )
           .setDescription(result)
           .setColor(Colors.Green),
       ],

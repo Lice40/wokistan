@@ -21,7 +21,7 @@ export async function listRecommendations(
     .members.fetch({ user: user == null ? interaction.user.id : user.id });
   var reponse = ``;
 
-  let listExclude = exclude ? exclude.split(",") : [];
+  let listExclude: Array<string> = exclude ? exclude.split(",") : [];
 
   for (let i = 0; i < listExclude.length; i++) {
     if (listExclude[i].startsWith(" ")) {
