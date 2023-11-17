@@ -39,7 +39,9 @@ export async function pronounInformations(
     if (daily) {
       result =
         result +
-        `\n\n **pronoms du jour:** \n > pronom: ${daily.pronom} \n > accord: ${daily.accord}`;
+        `\n\n **pronoms du jour:** \n > pronom: ${daily.pronom.join(
+          " , "
+        )} \n > accord: ${daily.accord.join(" , ")}`;
     }
     await interaction.reply({
       embeds: [

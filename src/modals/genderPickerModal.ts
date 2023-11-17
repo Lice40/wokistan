@@ -5,7 +5,11 @@ import { ActionRowBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 export class GenderPickerModal extends Modal {
   constructor(id: string, datas: any | null) {
     super(id, "paramètres");
-
+    const iterations = new TextInputBuilder()
+      .setCustomId("iter")
+      .setLabel("nombre voulu")
+      .setValue("1")
+      .setStyle(TextInputStyle.Short);
     const pronomsInput = new TextInputBuilder()
       .setCustomId("pronoms")
       .setLabel("liste de pronoms")
@@ -24,9 +28,13 @@ export class GenderPickerModal extends Modal {
     }
     const firstActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(pronomsInput);
+
     const secondActionRow =
       new ActionRowBuilder<TextInputBuilder>().addComponents(accordsInput);
 
-    this.modal.addComponents(firstActionRow, secondActionRow);
+    const thirdActionRow =
+      new ActionRowBuilder<TextInputBuilder>().addComponents(iterations);
+
+    this.modal.addComponents(firstActionRow, secondActionRow, thirdActionRow);
   }
 }

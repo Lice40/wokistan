@@ -20,22 +20,42 @@ export async function genderPick(interaction: CommandInteraction) {
     .then(async (result) => {
       const pronoms = result.fields.getTextInputValue("pronoms").split(",");
       const accords = result.fields.getTextInputValue("accords").split(",");
-      let results: string = "résultats: \n";
-      let pronom = pronoms.sample();
-      let accord = accords.sample();
+      const iterations: number = parseInt(
+        result.fields.getTextInputValue("iter")
+      );
+      let pronomsResult: Array<string> = [];
+      let accordsResult: Array<string> = [];
+
+      let results: string = "";
+      let i = 0;
+      while (pronoms.length > 0 && i < iterations) {
+        let temp = pronoms.sample();
+        pronomsResult.push(temp);
+        accordsResult.push(accords.sample());
+
+        pronoms.splice(pronoms.indexOf(temp), 1);
+        i = i + 1;
+      }
+
       if (data) {
         await dailyPronouns.findOneAndUpdate(
           { userId: interaction.user.id },
-          { pronom: pronom, accord: accord }
+          {
+            pronom: [...new Set(pronomsResult)],
+            accord: [...new Set(accordsResult)],
+          }
         );
       } else {
         await dailyPronouns.create({
           userId: interaction.user.id,
-          pronom: pronom,
-          accord: accord,
+          pronom: [...new Set(pronomsResult)],
+          accord: [...new Set(accordsResult)],
         });
       }
-      let line = `- pronom: ${pronom}, accords: ${accord} \n`;
+
+      let line = `> **pronom:** ${[...new Set(pronomsResult)].join(
+        " , "
+      )} \n  > **accords:** ${[...new Set(accordsResult)].join(" , ")} \n`;
       results = results.concat(line);
       await result.reply({
         embeds: [

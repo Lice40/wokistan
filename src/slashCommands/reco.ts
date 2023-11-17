@@ -10,6 +10,7 @@ import { addReco } from "./subcommands/reco/reco.add";
 import { listRecommendations } from "./subcommands/reco/reco.list";
 import { deleteReco } from "./subcommands/reco/reco.delete";
 import { editRecommendation } from "./subcommands/reco/reco.edit";
+import { recoInfo } from "./subcommands/reco/reco.info";
 export const command: SlashCommand = {
   name: "reco",
   data: new SlashCommandBuilder()
@@ -58,6 +59,17 @@ export const command: SlashCommand = {
             .setDescription("l'oeuvre à modifier")
             .setRequired(true)
         )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("info")
+        .setDescription("obtient les infos sur une recommendation")
+        .addStringOption((opt) =>
+          opt
+            .setName("reco")
+            .setDescription("la recommendation")
+            .setRequired(true)
+        )
     ),
   execute: async (interaction: CommandInteraction) => {
     const cmd = (
@@ -88,6 +100,13 @@ export const command: SlashCommand = {
           interaction,
           rName.replace(/^./, rName[0].toUpperCase())
         );
+        break;
+      case "info":
+        let reco = interaction.options
+          .get("reco")
+          .value.toString()
+          .toLowerCase();
+        await recoInfo(interaction, reco.replace(/^./, reco[0].toUpperCase()));
         break;
     }
   },
