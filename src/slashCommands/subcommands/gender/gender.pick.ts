@@ -20,21 +20,32 @@ export async function genderPick(interaction: CommandInteraction) {
     .then(async (result) => {
       const pronoms = result.fields.getTextInputValue("pronoms").split(",");
       const accords = result.fields.getTextInputValue("accords").split(",");
-      const iterations: number = parseInt(
-        result.fields.getTextInputValue("iter")
+      const pronounIterations: number = parseInt(
+        result.fields.getTextInputValue("pronounIter")
+      );
+
+      const accordsIterations: number = parseInt(
+        result.fields.getTextInputValue("accordIter")
       );
       let pronomsResult: Array<string> = [];
       let accordsResult: Array<string> = [];
 
       let results: string = "";
       let i = 0;
-      while (pronoms.length > 0 && i < iterations) {
+      while (pronoms.length > 0 && i < pronounIterations) {
         let temp = pronoms.sample();
         pronomsResult.push(temp);
-        accordsResult.push(accords.sample());
 
         pronoms.splice(pronoms.indexOf(temp), 1);
         i = i + 1;
+      }
+
+      let j = 0;
+      while (accords.length > 0 && j < accordsIterations) {
+        let tmp = accords.sample();
+        accordsResult.push(tmp);
+        accords.splice(accords.indexOf(tmp), 1);
+        j = j + 1;
       }
 
       if (data) {
