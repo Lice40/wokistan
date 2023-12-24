@@ -3,11 +3,12 @@ import recommendations, {
   Recommendation,
 } from "../../../schemas/recommendations";
 import { AddRecoModal } from "../../../modals/addRecoModal";
+import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function addReco(interaction: CommandInteraction) {
   const modal = new AddRecoModal(interaction.user.id);
   await interaction.showModal(modal.getModal);
-
+  var answer: AnswerHandler = new AnswerHandler(interaction, null, null, null);
   interaction
     .awaitModalSubmit({ time: 120000 })
     .then(async (result) => {
@@ -26,25 +27,15 @@ export async function addReco(interaction: CommandInteraction) {
         name: name,
         type: type,
       });
-
+      answer.setInteraction(result);
       if (data) {
-        await interaction.reply({
-          embeds: [
-            new EmbedBuilder()
-              .setTitle("L'oeuvre existe déjà")
-              .setDescription(`L'oeuvre ${data.name} est déjà enregistrée`)
-              .setColor(Colors.Red),
-          ],
-        });
+        answer.setTitle("L'oeuvre existe déjà");
+        answer.setContent(`L'oeuvre ${data.name} est déjà enregistrée`);
+        answer.setColor(Colors.Red);
       } else {
-        await result.reply({
-          embeds: [
-            new EmbedBuilder()
-              .setTitle("Modification réussie")
-              .setDescription(`L'oeuvre ${name} à été créée`)
-              .setColor(Colors.Green),
-          ],
-        });
+        answer.setTitle("Modification réussie");
+        answer.setContent(`L'oeuvre ${name} à été créée`);
+        answer.setColor(Colors.Green);
         for (let i = 0; i < warnings.length; i++) {
           if (warnings[i].startsWith(" ")) {
             warnings[i] = warnings[i]
@@ -61,6 +52,7 @@ export async function addReco(interaction: CommandInteraction) {
           warnings: warnings.length == 0 || warnings[0] == "" ? [] : warnings,
         });
       }
+      await answer.reply();
     })
     .catch((err) => console.log(err));
 }

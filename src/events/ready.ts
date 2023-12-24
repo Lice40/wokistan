@@ -17,9 +17,9 @@ const event: BotEvent = {
 
     // console.log(guildMembers);
     var channelToWrite: TextChannel = client.channels.cache.get(
-      "764019300230758411"
+      process.env.BOT_CHANNEL_ID
     ) as TextChannel;
-    // channelToWrite.send(`Hello World <@&${process.env.ROLE_ID}>!`);
+    channelToWrite.send(`It's time ro woken'roll! \n`);
   },
 };
 

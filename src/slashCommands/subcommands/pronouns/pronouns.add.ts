@@ -9,6 +9,7 @@ import {
 import { Modal } from "../../../modals/modals";
 import { PronounEditModal } from "../../../modals/pronounEditModal";
 import Pronouns from "../../../schemas/pronounInfo";
+import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function pronounAdd(user: User, interaction: CommandInteraction) {
   let informations = await Pronouns.findOne({
@@ -39,18 +40,15 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
           page: page,
         });
       }
-      await result.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setTitle("mise à jour réussie")
-            .setDescription(
-              `informations de l'utilisateurice ${
-                member.nickname ? member.nickname : member.user.username
-              } mises à jour`
-            )
-            .setColor(Colors.Green),
-        ],
-      });
+      let answer = `informations de l'utilisateurice ${
+        member.nickname ? member.nickname : member.user.username
+      } mises à jour`;
+      await new AnswerHandler(
+        result,
+        "mise à jour réussie",
+        answer,
+        Colors.Green
+      ).reply();
     })
     .catch((err) => console.log(err));
 }

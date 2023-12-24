@@ -7,6 +7,7 @@ declare global {
       ROLE_ID: string;
       GUILD_ID: string;
       MONGODB_STR: string;
+      BOT_CHANNEL_ID: string;
     }
   }
 }

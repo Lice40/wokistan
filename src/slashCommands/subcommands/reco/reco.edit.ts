@@ -3,6 +3,7 @@ import { RecoEditModal } from "../../../modals/recoEditModal";
 import recommendations, {
   Recommendation,
 } from "../../../schemas/recommendations";
+import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function editRecommendation(
   interaction: CommandInteraction,
@@ -11,15 +12,12 @@ export async function editRecommendation(
   const oeuvre: Recommendation = await recommendations.findOne({ name: name });
 
   if (!oeuvre) {
-    console.log("je suis la");
-    await interaction.reply({
-      embeds: [
-        new EmbedBuilder()
-          .setTitle("L'oeuvre n'existe pas ")
-          .setDescription(`L'oeuvre ${name} n'est pas encore enregistrée`)
-          .setColor(Colors.Red),
-      ],
-    });
+    await new AnswerHandler(
+      interaction,
+      "L'oeuvre n'existe pas ",
+      `L'oeuvre ${name} n'est pas encore enregistrée`,
+      Colors.Red
+    ).reply();
     return;
   }
   const modal = new RecoEditModal(interaction.user.id, name, oeuvre);
@@ -35,14 +33,12 @@ export async function editRecommendation(
         }
         warnings[i] = warnings[i].toLowerCase();
       }
-      await result.reply({
-        embeds: [
-          new EmbedBuilder()
-            .setTitle("Modification réussie")
-            .setDescription(`L'oeuvre ${name} à été modifiée`)
-            .setColor(Colors.Green),
-        ],
-      });
+      await new AnswerHandler(
+        result,
+        "Modification réussie",
+        `L'oeuvre ${name} à été modifiée`,
+        Colors.Green
+      ).reply();
       await recommendations.findOneAndUpdate(
         { name: name },
         { warnings: warnings }

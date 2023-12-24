@@ -8,6 +8,7 @@ import {
 import recommendations, {
   Recommendation,
 } from "../../../schemas/recommendations";
+import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function listRecommendations(
   interaction: CommandInteraction,
@@ -59,13 +60,5 @@ export async function listRecommendations(
           : "aucun"
       } \n\n`;
   }
-
-  await interaction.reply({
-    embeds: [
-      new EmbedBuilder()
-        .setTitle(title)
-        .setDescription(reponse)
-        .setColor(Colors.Green),
-    ],
-  });
+  await new AnswerHandler(interaction, title, reponse, Colors.Green).reply();
 }
