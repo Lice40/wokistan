@@ -5,28 +5,14 @@ import {
   EmbedBuilder,
   SlashCommandBuilder,
 } from "discord.js";
+import { datas } from "./datas/pronouns.data";
 import { SlashCommand } from "../types";
 import { pronounInformations } from "./subcommands/pronouns/pronouns.info";
 import { pronounAdd } from "./subcommands/pronouns/pronouns.add";
+
 export const command: SlashCommand = {
   name: "pronouns",
-  data: new SlashCommandBuilder()
-    .setName("pronouns")
-    .setDescription("selectionne un ou plusieurs pronoms et accords")
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("info")
-        .setDescription("retourne des informations sur une personne")
-        .addUserOption((opt) =>
-          opt
-            .setName("user")
-            .setDescription("the user you want informations")
-            .setRequired(true)
-        )
-    )
-    .addSubcommand((subcommand) =>
-      subcommand.setName("add").setDescription("ajoute des informations")
-    ),
+  data: datas,
   execute: async (interaction: CommandInteraction) => {
     const cmd = (
       interaction as ChatInputCommandInteraction
