@@ -1,6 +1,6 @@
 import dailyPronouns, { Daily } from "../../../schemas/dailyPronouns";
 import pronounInfo, { PronounInfo } from "../../../schemas/pronounInfo";
-import { CommandHandler } from "../../interfaces/commandHandler.inteface";
+import { CommandHandler } from "../../../utils/interfaces/commandHandler.inteface";
 
 export class GenderPicker implements CommandHandler {
   private _pronounInfos: PronounInfo;
