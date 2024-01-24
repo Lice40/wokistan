@@ -1,4 +1,11 @@
-import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
+import {
+  ActionRow,
+  ActionRowBuilder,
+  Colors,
+  CommandInteraction,
+  EmbedBuilder,
+  StringSelectMenuBuilder,
+} from "discord.js";
 import recommendations, {
   Recommendation,
 } from "../../../schemas/recommendations";
@@ -7,8 +14,10 @@ import { AnswerHandler } from "../../../utils/answerHandler";
 export async function recoInfo(interaction: CommandInteraction, name: string) {
   let reco: Recommendation;
   var answer: AnswerHandler = new AnswerHandler(interaction);
+  /**Création d'un menu de test */
+
   reco = await recommendations.findOne({ name: name });
-  console.log(name);
+
   if (!reco) {
     answer
       .setTitle("erreur")

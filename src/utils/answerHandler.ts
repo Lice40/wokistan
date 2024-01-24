@@ -1,17 +1,25 @@
 import {
   APIEmbed,
+  ButtonInteraction,
   CommandInteraction,
   EmbedBuilder,
   Interaction,
   JSONEncodable,
   ModalSubmitInteraction,
+  escapeHeading,
 } from "discord.js";
 
 export class AnswerHandler {
-  private _interaction: ModalSubmitInteraction | CommandInteraction;
+  private _interaction:
+    | ModalSubmitInteraction
+    | CommandInteraction
+    | ButtonInteraction;
   private _embed: EmbedBuilder[];
   constructor(
-    interaction: ModalSubmitInteraction | CommandInteraction,
+    interaction:
+      | ModalSubmitInteraction
+      | CommandInteraction
+      | ButtonInteraction,
     title: string = "N/A",
     content: string = "N/A",
     color: number = 0
@@ -26,9 +34,10 @@ export class AnswerHandler {
     ];
   }
 
-  async reply(): Promise<void> {
+  async reply(ephemeral = false): Promise<void> {
     await this._interaction.reply({
       embeds: this._embed,
+      ephemeral: ephemeral,
     });
   }
 

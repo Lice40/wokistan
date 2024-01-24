@@ -5,6 +5,7 @@ import {
   ApplicationCommand,
   ChatInputCommandInteraction,
   Interaction,
+  ButtonInteraction,
 } from "discord.js";
 
 declare module "discord.js" {
@@ -21,6 +22,11 @@ export interface BotEvent {
 export interface SlashCommand {
   name: string;
   data: SlashCommandBuilder | any;
-  execute: (interaction: CommandInteraction | Interaction) => Promise<void>;
+  // autocomplete?: (
+  //   interaction: CommandInteraction | Interaction
+  // ) => Promise<any>;
+  execute: (
+    interaction: CommandInteraction | Interaction | ButtonInteraction
+  ) => Promise<void>;
 }
 export {};

@@ -1,4 +1,8 @@
-import { SlashCommandBuilder } from "discord.js";
+import {
+  APIApplicationCommandOptionChoice,
+  SlashCommandBuilder,
+} from "discord.js";
+import recommendations, { Recommendation } from "../../schemas/recommendations";
 
 export var datas = new SlashCommandBuilder()
   .setName("reco")
@@ -34,6 +38,7 @@ export var datas = new SlashCommandBuilder()
           .setName("nom")
           .setDescription("le nom de la recommendation à supprimer")
           .setRequired(true)
+          .setAutocomplete(true)
       )
   )
   .addSubcommand((subcommand) =>

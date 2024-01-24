@@ -37,7 +37,7 @@ export async function genderPick(interaction: CommandInteraction) {
         " , "
       )} \n  > **accords:** ${[...new Set(accordsResult)].join(" , ")} \n`;
       results = results.concat(line);
-
+      await genderPicker.updateDb();
       await new AnswerHandler(
         result,
         "Résultats",

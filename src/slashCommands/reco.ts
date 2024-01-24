@@ -1,6 +1,10 @@
 import {
+  APIApplicationCommandAutocompleteInteraction,
+  ApplicationCommandOptionChoiceData,
+  AutocompleteInteraction,
   ChatInputCommandInteraction,
   CommandInteraction,
+  Interaction,
   SlashCommandBuilder,
 } from "discord.js";
 import { SlashCommand } from "../types";
@@ -12,6 +16,7 @@ import { deleteReco } from "./subcommands/reco/reco.delete";
 import { editRecommendation } from "./subcommands/reco/reco.edit";
 import { recoInfo } from "./subcommands/reco/reco.info";
 import { datas } from "./datas/recos.datas";
+import recommendations, { Recommendation } from "../schemas/recommendations";
 export const command: SlashCommand = {
   name: "reco",
   data: datas,
@@ -19,7 +24,7 @@ export const command: SlashCommand = {
     const cmd = (
       interaction as ChatInputCommandInteraction
     ).options.getSubcommand();
-
+    console.log((interaction as ChatInputCommandInteraction).options);
     switch (cmd) {
       case "add":
         await addReco(interaction);
