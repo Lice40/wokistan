@@ -5,6 +5,7 @@ export interface Poll {
   id: string;
   voters: Set<any>;
   name: string;
+  votes: Array<string>;
   ended: boolean;
 }
 
@@ -13,6 +14,7 @@ let pollSchema = new Schema({
   id: { type: String, required: true },
   voters: { type: Array<String>, required: true },
   name: { type: String, required: true },
+  votes: { type: Array<String>, required: true },
   ended: { type: Boolean, required: true },
 });
 

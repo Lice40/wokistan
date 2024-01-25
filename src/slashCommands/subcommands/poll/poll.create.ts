@@ -3,6 +3,7 @@ import {
   APIMessageActionRowComponent,
   ActionRowBuilder,
   ButtonBuilder,
+  ButtonStyle,
   Colors,
   CommandInteraction,
   EmbedBuilder,
@@ -54,7 +55,12 @@ export async function createPoll(interaction: CommandInteraction) {
             .setStyle((i + 1) % 5)
         );
       }
-
+      buttons.push(
+        new ButtonBuilder()
+          .setLabel("annuler")
+          .setCustomId(`poll-cancel-${replyObject.id}`)
+          .setStyle(ButtonStyle.Danger)
+      );
       const pollButtons = new ActionRowBuilder().addComponents(buttons);
 
       result.editReply({
@@ -68,6 +74,7 @@ export async function createPoll(interaction: CommandInteraction) {
         name: question,
         voters: [],
         added_by: interaction.user.id,
+        votes: [],
         ended: false,
       });
     })
