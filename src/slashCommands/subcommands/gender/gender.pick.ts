@@ -12,7 +12,16 @@ import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function genderPick(interaction: CommandInteraction) {
   var genderPicker: GenderPicker = await new GenderPicker(interaction.user.id);
-  await genderPicker.init();
+  let valid = await genderPicker.init();
+
+  if (!valid) {
+    return new AnswerHandler(
+      interaction,
+      "Echec",
+      "vous n'avez pas encore créé votre profil. Veuillez le créer avec la commande /pronouns add et recommencer",
+      Colors.Red
+    ).reply(true);
+  }
   const modal = new GenderPickerModal(
     interaction.user.id,
     genderPicker.pronounInfos

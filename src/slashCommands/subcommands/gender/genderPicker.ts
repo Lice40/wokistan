@@ -12,9 +12,13 @@ export class GenderPicker implements CommandHandler {
   constructor(userId: string) {
     this.userId = userId;
   }
-  async init(): Promise<void> {
+  async init(): Promise<boolean> {
     this._pronounInfos = await pronounInfo.findOne({ userId: this.userId });
     this._dailies = await dailyPronouns.findOne({ userId: this.userId });
+    if (!this._pronounInfos) {
+      return false;
+    }
+    return true;
   }
 
   async updateDb(): Promise<void> {

@@ -21,6 +21,14 @@ export async function closePoll(interaction: CommandInteraction) {
         ).reply(true);
         return;
       }
+      if (pol.added_by !== interaction.user.id) {
+        return await new AnswerHandler(
+          result,
+          "Vous n'êtes pas la créateurice du sondage!",
+          null,
+          Colors.Red
+        ).reply(true);
+      }
 
       if (pol.ended) {
         await new AnswerHandler(

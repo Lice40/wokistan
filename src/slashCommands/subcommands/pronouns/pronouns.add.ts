@@ -9,6 +9,7 @@ import {
 import { Modal } from "../../../modals/modals";
 import { PronounEditModal } from "../../../modals/pronounEditModal";
 import Pronouns from "../../../schemas/pronounInfo";
+import dailies from "../../../schemas/dailyPronouns";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
 export async function pronounAdd(user: User, interaction: CommandInteraction) {
@@ -38,6 +39,13 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
           pronouns: pronoms,
           accords: accords,
           page: page,
+        });
+
+        await dailies.create({
+          userId: user.id,
+          pronom: [],
+          accord: [],
+          already_picked: [],
         });
       }
       let answer = `informations de l'utilisateurice ${
