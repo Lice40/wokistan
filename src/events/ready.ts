@@ -22,8 +22,7 @@ const event: BotEvent = {
     var channelToWrite: TextChannel = client.channels.cache.get(
       process.env.BOT_CHANNEL_ID
     ) as TextChannel;
-    channelToWrite.send(`It's wokism time \n`);
+    channelToWrite.send(" le bot est lancé wsh");
   },
 };
-
 export default event;

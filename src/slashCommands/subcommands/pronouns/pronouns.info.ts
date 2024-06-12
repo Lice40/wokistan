@@ -35,18 +35,18 @@ export async function pronounInformations(
         }`
       )
       .setColor(Colors.Green);
-    let content = `**informations générales:** \n > pronoms: ${(
+    let content = `**informations générales:** \n\n > **pronoms**: \n > ${(
       infos.pronouns as Array<string>
-    ).join(",")} \n > accords: ${(infos.accords as Array<string>).join(
-      ","
-    )}\n > page: ${infos.page == "" ? "aucune" : infos.page} `;
+    ).join(",")} \n\n > **accords**: \n > ${(
+      infos.accords as Array<string>
+    ).join(",")}\n > **page**: ${infos.page == "" ? "aucune" : infos.page} `;
 
     if (daily) {
       content =
         content +
-        `\n\n **pronoms du jour:** \n > pronom: ${daily.pronom.join(
+        `\n\n **pronoms du jour:** \n > **pronom**: ${daily.pronom.join(
           " , "
-        )} \n > accord: ${daily.accord.join(" , ")}`;
+        )} \n > **accord**: ${daily.accord.join(" , ")}`;
     }
     answer.setContent(content);
   }

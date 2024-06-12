@@ -29,7 +29,7 @@ export async function recoInfo(interaction: CommandInteraction, name: string) {
       .setContent(
         `> type: ${reco.type} \n > TW: ${
           reco.warnings.length > 0 || reco.warnings[0] == ""
-            ? reco.warnings.join(" , ")
+            ? "||" + reco.warnings.join(" , ") + "||"
             : "aucun"
         } \n\n`
       )

@@ -56,7 +56,7 @@ export async function listRecommendations(
       reponse +
       `> TW: ${
         list[i].warnings.length > 0 || list[i].warnings[0] == ""
-          ? list[i].warnings.join(" , ")
+          ? "||" + list[i].warnings.join(" , ") + "||"
           : "aucun"
       } \n\n`;
   }

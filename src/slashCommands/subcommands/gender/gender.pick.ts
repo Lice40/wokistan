@@ -42,7 +42,7 @@ export async function genderPick(interaction: CommandInteraction) {
       );
 
       let results: string = "";
-      let line = `> **pronom:** ${[...new Set(pronomsResult)].join(
+      let line = `> **pronoms:** ${[...new Set(pronomsResult)].join(
         " , "
       )} \n  > **accords:** ${[...new Set(accordsResult)].join(" , ")} \n`;
       results = results.concat(line);
