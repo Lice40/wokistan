@@ -1,11 +1,13 @@
 import {
   APIEmbed,
+  APIEmbedField,
   ButtonInteraction,
   CommandInteraction,
   EmbedBuilder,
   Interaction,
   JSONEncodable,
   ModalSubmitInteraction,
+  RestOrArray,
   escapeHeading,
 } from "discord.js";
 
@@ -60,6 +62,11 @@ export class AnswerHandler {
     interaction: ModalSubmitInteraction | CommandInteraction
   ) {
     this._interaction = interaction;
+    return this as AnswerHandler;
+  }
+
+  public setFields(...content: RestOrArray<APIEmbedField>) {
+    this._embed[0].addFields(...content);
     return this as AnswerHandler;
   }
 }

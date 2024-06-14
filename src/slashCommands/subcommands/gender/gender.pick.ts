@@ -27,7 +27,10 @@ export async function genderPick(interaction: CommandInteraction) {
     genderPicker.pronounInfos
   );
 
-  let member: GuildMember = interaction.member as GuildMember;
+  let user: GuildMember = interaction.member as GuildMember;
+  let member: GuildMember = await interaction.client.guilds.cache
+    .get(interaction.guildId)
+    .members.fetch({ user: user == null ? interaction.user.id : user.id });
   await interaction.showModal(modal.getModal);
   interaction
     .awaitModalSubmit({ time: 120000 })
@@ -40,19 +43,32 @@ export async function genderPick(interaction: CommandInteraction) {
         result.fields.getTextInputValue("accords").split(","),
         parseInt(result.fields.getTextInputValue("accordIter"))
       );
-
-      let results: string = "";
-      let line = `> **pronoms:** ${[...new Set(pronomsResult)].join(
-        " , "
-      )} \n  > **accords:** ${[...new Set(accordsResult)].join(" , ")} \n`;
-      results = results.concat(line);
       await genderPicker.updateDb();
       await new AnswerHandler(
         result,
-        "Résultats",
-        results,
+        `Résultats du tirage de l'utilisateurice ${member.nickname}`,
+        null,
         Colors.Green
-      ).reply();
+      )
+        .setFields(
+          {
+            name: `**pronoms**:`,
+            value: `> ${pronomsResult
+              .divide(4)
+              .join("\n> ")
+              .split(",")
+              .join(", ")}`,
+          },
+          {
+            name: `**Accords**:`,
+            value: `> ${accordsResult
+              .divide(4)
+              .join("\n> ")
+              .split(",")
+              .join(", ")}`,
+          }
+        )
+        .reply();
     })
     .catch((err) => console.log(err));
 }

@@ -2,6 +2,11 @@ import { Colors, CommandInteraction, EmbedBuilder } from "discord.js";
 import recommendations from "../../../schemas/recommendations";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
+/**
+ * gère la fonciton /reco delete <name>
+ * @param interaction l'intéraction en cours
+ * @param name le nom de la recommendation
+ */
 export async function deleteReco(
   interaction: CommandInteraction,
   name: string

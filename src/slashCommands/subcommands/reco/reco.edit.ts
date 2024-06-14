@@ -5,6 +5,12 @@ import recommendations, {
 } from "../../../schemas/recommendations";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
+/**
+ * Permer de modifier une recommendation
+ * @param  interaction - l'intéraction en cours
+ * @param  name - le nom de la recommendation
+ *
+ */
 export async function editRecommendation(
   interaction: CommandInteraction,
   name: string

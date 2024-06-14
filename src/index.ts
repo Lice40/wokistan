@@ -40,4 +40,12 @@ if (!Array.prototype.sample) {
   };
 }
 
+if (!Array.prototype.divide) {
+  Array.prototype.divide = function (size: number) {
+    return Array.from({ length: Math.ceil(this.length / size) }, (_, index) =>
+      this.slice(index * size, (index + 1) * size)
+    );
+  };
+}
+
 export { client };

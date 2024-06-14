@@ -5,6 +5,10 @@ import recommendations, {
 import { AddRecoModal } from "../../../modals/addRecoModal";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
+/**
+ * Ajoute une recommmendation dans la base de données
+ * @param interaction - l'interacton en cours
+ */
 export async function addReco(interaction: CommandInteraction) {
   const modal = new AddRecoModal(interaction.user.id);
   await interaction.showModal(modal.getModal);

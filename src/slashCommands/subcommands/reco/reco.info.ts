@@ -11,6 +11,11 @@ import recommendations, {
 } from "../../../schemas/recommendations";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
+/**
+ * Permet d'obtenir les informations d'une recommendation précuse
+ * @param interaction - l'intéraction en cours
+ * @param name - le nom de la recomentadion
+ */
 export async function recoInfo(interaction: CommandInteraction, name: string) {
   let reco: Recommendation;
   var answer: AnswerHandler = new AnswerHandler(interaction);

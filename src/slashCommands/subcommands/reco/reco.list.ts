@@ -10,6 +10,12 @@ import recommendations, {
 } from "../../../schemas/recommendations";
 import { AnswerHandler } from "../../../utils/answerHandler";
 
+/**
+ * Retourne une liste de recommendations (nom, type, trigger warnings).
+ * @param interaction - l'intéraction en cours
+ * @param user - permet dde récuprrer les recommendations faites par un seul utilisateur, si il n'est pas spécifié alors toute les recommendations seront rrécupérées
+ * @param exclude - permet d'exclure certains trigger warnings de la liste, les recommendations ayant les trigger warnings donnés ne seront pas affichés
+ */
 export async function listRecommendations(
   interaction: CommandInteraction,
   user: User,
