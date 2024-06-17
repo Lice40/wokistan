@@ -9,6 +9,7 @@ import recommendations, {
   Recommendation,
 } from "../../../schemas/recommendations";
 import { AnswerHandler } from "../../../utils/answerHandler";
+import { Constants } from "../../../constants";
 
 /**
  * Retourne une liste de recommendations (nom, type, trigger warnings).
@@ -28,7 +29,9 @@ export async function listRecommendations(
     .members.fetch({ user: user == null ? interaction.user.id : user.id });
   var reponse = ``;
 
-  let listExclude: Array<string> = exclude ? exclude.split(",") : [];
+  let listExclude: Array<string> = exclude
+    ? exclude.split(Constants.ARRAY_SEPARATOR)
+    : [];
 
   for (let i = 0; i < listExclude.length; i++) {
     if (listExclude[i].startsWith(" ")) {
@@ -62,7 +65,7 @@ export async function listRecommendations(
       reponse +
       `> TW: ${
         list[i].warnings.length > 0 || list[i].warnings[0] == ""
-          ? "||" + list[i].warnings.join(" , ") + "||"
+          ? "||" + list[i].warnings.join(Constants.STRING_SEPARATOR) + "||"
           : "aucun"
       } \n\n`;
   }

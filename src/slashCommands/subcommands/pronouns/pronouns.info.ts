@@ -9,6 +9,7 @@ import {
 import Pronouns from "../../../schemas/pronounInfo";
 import dailyPronouns from "../../../schemas/dailyPronouns";
 import { AnswerHandler } from "../../../utils/answerHandler";
+import { Constants } from "../../../constants";
 
 export async function pronounInformations(
   interaction: CommandInteraction,
@@ -37,16 +38,18 @@ export async function pronounInformations(
       .setColor(Colors.Green);
     let content = `**informations générales:** \n\n > **pronoms**: \n > ${(
       infos.pronouns as Array<string>
-    ).join(",")} \n\n > **accords**: \n > ${(
+    ).join(Constants.STRING_SEPARATOR)} \n\n > **accords**: \n > ${(
       infos.accords as Array<string>
-    ).join(",")}\n > **page**: ${infos.page == "" ? "aucune" : infos.page} `;
+    ).join(Constants.STRING_SEPARATOR)}\n > **page**: ${
+      infos.page == "" ? "aucune" : infos.page
+    } `;
 
     if (daily) {
       content =
         content +
         `\n\n **pronoms du jour:** \n > **pronom**: ${daily.pronom.join(
-          " , "
-        )} \n > **accord**: ${daily.accord.join(" , ")}`;
+          Constants.STRING_SEPARATOR
+        )} \n > **accord**: ${daily.accord.join(Constants.STRING_SEPARATOR)}`;
     }
     answer.setContent(content);
   }

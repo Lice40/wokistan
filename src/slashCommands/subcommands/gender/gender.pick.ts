@@ -9,6 +9,7 @@ import dailyPronouns from "../../../schemas/dailyPronouns";
 import pronounInfo from "../../../schemas/pronounInfo";
 import { GenderPicker } from "./genderPicker";
 import { AnswerHandler } from "../../../utils/answerHandler";
+import { Constants } from "../../../constants";
 
 export async function genderPick(interaction: CommandInteraction) {
   var genderPicker: GenderPicker = await new GenderPicker(interaction.user.id);
@@ -36,11 +37,15 @@ export async function genderPick(interaction: CommandInteraction) {
     .awaitModalSubmit({ time: 120000 })
     .then(async (result) => {
       let pronomsResult: Array<string> = genderPicker.generatePronouns(
-        result.fields.getTextInputValue("pronoms").split(","),
+        result.fields
+          .getTextInputValue("pronoms")
+          .split(Constants.ARRAY_SEPARATOR),
         parseInt(result.fields.getTextInputValue("pronounIter"))
       );
       let accordsResult: Array<string> = genderPicker.generateAccords(
-        result.fields.getTextInputValue("accords").split(","),
+        result.fields
+          .getTextInputValue("accords")
+          .split(Constants.ARRAY_SEPARATOR),
         parseInt(result.fields.getTextInputValue("accordIter"))
       );
       await genderPicker.updateDb();
@@ -56,16 +61,16 @@ export async function genderPick(interaction: CommandInteraction) {
             value: `> ${pronomsResult
               .divide(4)
               .join("\n> ")
-              .split(",")
-              .join(", ")}`,
+              .split(Constants.ARRAY_SEPARATOR)
+              .join(Constants.STRING_SEPARATOR)}`,
           },
           {
             name: `**Accords**:`,
             value: `> ${accordsResult
               .divide(4)
               .join("\n> ")
-              .split(",")
-              .join(", ")}`,
+              .split(Constants.ARRAY_SEPARATOR)
+              .join(Constants.STRING_SEPARATOR)}`,
           }
         )
         .reply();

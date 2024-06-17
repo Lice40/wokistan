@@ -11,6 +11,7 @@ import { PronounEditModal } from "../../../modals/pronounEditModal";
 import Pronouns from "../../../schemas/pronounInfo";
 import dailies from "../../../schemas/dailyPronouns";
 import { AnswerHandler } from "../../../utils/answerHandler";
+import { Constants } from "../../../constants";
 
 export async function pronounAdd(user: User, interaction: CommandInteraction) {
   let informations = await Pronouns.findOne({
@@ -25,8 +26,12 @@ export async function pronounAdd(user: User, interaction: CommandInteraction) {
   interaction
     .awaitModalSubmit({ time: 360000 })
     .then(async (result) => {
-      const pronoms = result.fields.getTextInputValue("pronouns").split(",");
-      const accords = result.fields.getTextInputValue("gendering").split(",");
+      const pronoms = result.fields
+        .getTextInputValue("pronouns")
+        .split(Constants.ARRAY_SEPARATOR);
+      const accords = result.fields
+        .getTextInputValue("gendering")
+        .split(Constants.ARRAY_SEPARATOR);
       const page = result.fields.getTextInputValue("page");
       if (informations) {
         await Pronouns.findOneAndUpdate(

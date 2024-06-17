@@ -4,6 +4,7 @@ import recommendations, {
 } from "../../../schemas/recommendations";
 import { AddRecoModal } from "../../../modals/addRecoModal";
 import { AnswerHandler } from "../../../utils/answerHandler";
+import { Constants } from "../../../constants";
 
 /**
  * Ajoute une recommmendation dans la base de données
@@ -26,7 +27,7 @@ export async function addReco(interaction: CommandInteraction) {
         .toLowerCase();
       let warnings: string[] = result.fields
         .getTextInputValue("warnings")
-        .split(",");
+        .split(Constants.ARRAY_SEPARATOR);
       let data: Recommendation = await recommendations.findOne({
         name: name,
         type: type,
