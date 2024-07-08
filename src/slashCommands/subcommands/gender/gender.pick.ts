@@ -48,6 +48,7 @@ export async function genderPick(interaction: CommandInteraction) {
           .split(Constants.ARRAY_SEPARATOR),
         parseInt(result.fields.getTextInputValue("accordIter"))
       );
+
       await genderPicker.updateDb();
       await new AnswerHandler(
         result,

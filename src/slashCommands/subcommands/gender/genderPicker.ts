@@ -58,17 +58,11 @@ export class GenderPicker implements CommandHandler {
       return this._dailies.already_picked.indexOf(elt) === -1;
     });
 
-    let i = 0;
     if (iterations > 0) {
-      this._pResults = [];
-      while (working_list.length > 0 && i < iterations) {
-        let temp = working_list.sample();
-        this._pResults.push(temp);
-        working_list.splice(working_list.indexOf(temp), 1);
-        i = i + 1;
-      }
+      this._pResults = this._generateList(working_list, iterations);
+    } else {
+      this._pResults = ["aucun"];
     }
-
     return this._pResults;
   }
 
@@ -77,16 +71,23 @@ export class GenderPicker implements CommandHandler {
     iterations: number
   ): Array<string> {
     this._aResults = this._dailies.accord;
-    let j = 0;
     if (iterations > 0) {
-      this._aResults = [];
-      while (accords.length > 0 && j < iterations) {
-        let tmp = accords.sample();
-        this._aResults.push(tmp);
-        accords.splice(accords.indexOf(tmp), 1);
-        j = j + 1;
-      }
+      this._aResults = this._generateList(accords, iterations);
+    } else {
+      this._aResults = ["aucun"];
     }
     return this._aResults;
+  }
+
+  private _generateList(array: Array<string>, iter: number): Array<string> {
+    let list: Array<string> = [];
+    let cpt: number = 0;
+    while (array.length > 0 && cpt < iter) {
+      let tmp = array.sample();
+      list.push(tmp);
+      array.splice(array.indexOf(tmp), 1);
+      cpt++;
+    }
+    return list;
   }
 }
