@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx tsc &&node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start_server": "node dist/index.js  > server.log 2 > &1 &"
+    "start_server": "node dist/index.js  > server.log 2 > &1"
   },
   "author": "",
   "license": "ISC",
