@@ -16,6 +16,7 @@ const event: BotEvent = {
       return;
     }
     console.log(`logged as ${client.user.tag}`);
+
     await client.guilds.cache.get(process.env.GUILD_ID).members.fetch(); //force le chargement des données des utilisateurs dans le cache !!!
 
     // console.log(guildMembers);

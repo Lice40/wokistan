@@ -61,7 +61,7 @@ export class GenderPicker implements CommandHandler {
     if (iterations > 0) {
       this._pResults = this._generateList(working_list, iterations);
     } else {
-      this._pResults = ["aucun"];
+      this._pResults = this._dailies.pronom;
     }
     return this._pResults;
   }
@@ -74,7 +74,7 @@ export class GenderPicker implements CommandHandler {
     if (iterations > 0) {
       this._aResults = this._generateList(accords, iterations);
     } else {
-      this._aResults = ["aucun"];
+      this._aResults = this._dailies.accord;
     }
     return this._aResults;
   }
